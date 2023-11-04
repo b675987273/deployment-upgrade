@@ -1,0 +1,124 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.11.3
+  creationTimestamp: null
+  name: deploymentupgrades.upgrade.github.com
+spec:
+  group: upgrade.github.com
+  names:
+    kind: DeploymentUpgrade
+    listKind: DeploymentUpgradeList
+    plural: deploymentupgrades
+    singular: deploymentupgrade
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: DeploymentUpgrade is the Schema for the deploymentupgrades API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DeploymentUpgradeSpec defines the desired state of DeploymentUpgrade
+            properties:
+              mode:
+                default: scaleOutPriority
+                type: string
+              nextDeployName:
+                type: string
+              nextDeployNamespace:
+                type: string
+              nextGenStageTarget:
+                minimum: 0
+                type: integer
+              originDeployName:
+                type: string
+              originDeployNamespace:
+                type: string
+              originStageTarget:
+                minimum: 0
+                type: integer
+              step:
+                minimum: 1
+                type: integer
+            required:
+            - mode
+            - nextDeployName
+            - nextDeployNamespace
+            - nextGenStageTarget
+            - originDeployName
+            - originDeployNamespace
+            - originStageTarget
+            - step
+            type: object
+          status:
+            description: DeploymentUpgradeStatus defines the observed state of DeploymentUpgrade
+            properties:
+              config:
+                description: Upgrade
+                properties:
+                  mode:
+                    type: string
+                  nextGenStageTarget:
+                    type: integer
+                  nextGenStepReplica:
+                    type: integer
+                  originStageTarget:
+                    type: integer
+                  originStepReplica:
+                    type: integer
+                required:
+                - mode
+                - nextGenStageTarget
+                - nextGenStepReplica
+                - originStageTarget
+                - originStepReplica
+                type: object
+              deployStatus:
+                properties:
+                  nextGenReady:
+                    type: integer
+                  nextGenReplica:
+                    type: integer
+                  originReady:
+                    type: integer
+                  originReplica:
+                    type: integer
+                  totalReady:
+                    type: integer
+                required:
+                - nextGenReady
+                - nextGenReplica
+                - originReady
+                - originReplica
+                - totalReady
+                type: object
+              state:
+                type: string
+              updateAt:
+                type: string
+            required:
+            - config
+            - deployStatus
+            - state
+            - updateAt
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

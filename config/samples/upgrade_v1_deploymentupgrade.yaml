@@ -1,0 +1,21 @@
+apiVersion: upgrade.github.com/v1
+kind: DeploymentUpgrade
+metadata:
+  labels:
+    app.kubernetes.io/name: deploymentupgrade
+    app.kubernetes.io/instance: deploymentupgrade-sample
+    app.kubernetes.io/part-of: deployment-upgrade
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: deployment-upgrade
+  name: deploymentupgrade-sample
+spec:
+  # TODO(user): Add fields here
+  mode: scaleOutPriority
+  step: 3
+  originStageTarget: 1
+  nextGenStageTarget: 30
+  originDeployName: kitex-lane-meta-server-bho9
+  originDeployNamespace: idp-test
+  nextDeployName: kitex-lane-meta-server-gray
+  nextDeployNamespace: idp-test
+

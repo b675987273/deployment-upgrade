@@ -1,0 +1,27 @@
+# permissions for end users to view deploymentupgrades.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: deploymentupgrade-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: deployment-upgrade
+    app.kubernetes.io/part-of: deployment-upgrade
+    app.kubernetes.io/managed-by: kustomize
+  name: deploymentupgrade-viewer-role
+rules:
+- apiGroups:
+  - upgrade.github.com
+  resources:
+  - deploymentupgrades
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - upgrade.github.com
+  resources:
+  - deploymentupgrades/status
+  verbs:
+  - get
